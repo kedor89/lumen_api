@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employee;
+use App\Models\Company;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -10,24 +10,24 @@ use Illuminate\Support\Facades\Validator;
 /**
  *
  */
-class EmployeeControler
+class CompanyControler
 {
 
     /**
-     * Get employee data from database by id
+     * Get company data from database by id
      * @param Request $request
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function get(Request $request, $id): \Illuminate\Http\JsonResponse
     {
-        $results = Employee::find($id);
+        $results = Company::find($id);
         return response()->json($results);
     }
 
 
     /**
-     * Create employee / add employee to database
+     * Create company / add company to database
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -35,8 +35,10 @@ class EmployeeControler
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required|email'
+            'nip' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'postal_code' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -47,61 +49,63 @@ class EmployeeControler
         }
 
         try {
-            $employee = new Employee([
+            $company = new Company([
                 'name' => $request->get('name'),
-                'last_name' => $request->get('last_name'),
-                'email' => $request->get('email'),
-                'phone' => $request->get('phone')
+                'nip' => $request->get('nip'),
+                'address' => $request->get('address'),
+                'city' => $request->get('city'),
+                'postal_code' => $request->get('postal_code')
             ]);
 
-            $employee->save();
+            $company->save();
             return response()->json([
                 'success' => 1,
-                'message' => 'Employee added',
+                'message' => 'Company added',
             ]);
         } catch (Exception $e) {
+            echo $e->getMessage();
             return response()->json([
                 'success' => 0,
-                'message' => 'Failed to add employee',
+                'message' => 'Failed to add company',
             ], 400);
         }
 
     }
 
     /**
-     * Get employee data from database by id
+     * Get Company data from database by id
      * @param Request $request
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function delete(Request $request, $id): \Illuminate\Http\JsonResponse
     {
-        $employee = Employee::find($id);
-        if ($employee === null) {
+        $company = Company::find($id);
+        if ($company === null) {
             return response()->json([
                 'success' => 0,
-                'message' => 'No employee with provided id'
+                'message' => 'No company with provided id'
             ]);
         }
 
         try {
-            $employee = Employee::find($id);
-            $employee->delete();
+            $company = Company::find($id);
+            $company->delete();
 
             return response()->json([
                 'success' => 1,
-                'message' => 'Employee deleted',
+                'message' => 'Company deleted',
             ]);
         } catch (Exception $e) {
             return response()->json([
                 'success' => 0,
-                'message' => 'Failed to delete selected employee',
+                'message' => 'Failed to delete selected company',
             ]);
         }
     }
 
     /**
-     * Update employee in database
+     * Update company in database
      * @param Request $request
      * @param $id
      * @return \Illuminate\Http\JsonResponse
@@ -110,8 +114,10 @@ class EmployeeControler
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required|email'
+            'nip' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'postal_code' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -121,30 +127,32 @@ class EmployeeControler
             ], 400);
         }
 
-        $employee = Employee::find($id);
-        if ($employee === null) {
+        $company = Company::find($id);
+        if ($company === null) {
             return response()->json([
                 'success' => 0,
-                'message' => 'No employee with provided id'
+                'message' => 'No company with provided id'
             ]);
         }
 
         try {
-            Employee::find($id)->update([
+            Company::find($id)->update([
                 'name' => $request->get('name'),
-                'last_name' => $request->get('last_name'),
-                'email' => $request->get('email'),
-                'phone' => $request->get('phone')
+                'nip' => $request->get('nip'),
+                'address' => $request->get('address'),
+                'city' => $request->get('city'),
+                'postal_code' => $request->get('postal_code')
             ]);
+
 
             return response()->json([
                 'success' => 1,
-                'message' => 'Employee updated',
+                'message' => 'Company updated',
             ]);
         } catch (Exception $e) {
             return response()->json([
                 'success' => 0,
-                'message' => 'Failed to update employee',
+                'message' => 'Failed to update company',
             ]);
         }
     }

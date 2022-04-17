@@ -20,3 +20,8 @@ $router->post('employee/create', 'EmployeeControler@create');
 $router->get('employee/get/{id}', 'EmployeeControler@get');
 $router->post('employee/update/{id}', 'EmployeeControler@update');
 $router->post('employee/delete/{id}', 'EmployeeControler@delete');
+
+$router->post('company/create', 'CompanyControler@create');
+$router->get('company/get/{id}', 'CompanyControler@get');
+$router->post('company/update/{id}', 'CompanyControler@update');
+$router->post('company/delete/{id}', 'CompanyControler@delete');

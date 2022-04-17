@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 
-class Employee extends Model
+class Company extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -17,11 +17,11 @@ class Employee extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'last_name','email', 'phone'
+        'name', 'nip', 'address', 'city', 'postal_code'
     ];
 
     protected $hidden = [
-      'created_at', 'updated_at'
+        'created_at', 'updated_at'
     ];
 
 }
