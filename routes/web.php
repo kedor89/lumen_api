@@ -13,6 +13,10 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+
+use Illuminate\Http\Request;
+
+$router->post('employee/create', 'EmployeeControler@create');
+$router->get('employee/get/{id}', 'EmployeeControler@get');
+$router->post('employee/update/{id}', 'EmployeeControler@update');
+$router->post('employee/delete/{id}', 'EmployeeControler@delete');
